@@ -78,3 +78,13 @@ def get_chunk(d=None, x=None, y=None):
          return arr 
      for i in range(65536): 
          c = data[i]
+
+
+def download_file(url): 
+     filename = url.split('/')[-1] 
+     r = requests.get(url, stream=True) 
+     with open(local_filename, 'wb') as f: 
+         for chunk in r.iter_content(chunk_size=1024):  
+             if chunk: 
+                 f.write(chunk) 
+     return filename
