@@ -73,7 +73,7 @@ def show_image(img):
 
 def get_chunk(d=None, x=None, y=None): 
      data = requests.get(f'https://twitch.tv/place').content 
-     arr = np.zeros((448, 448), np.uint8) 
+     arr = np.zeros((900, 900), np.uint8) 
      if len(data) != 65536: 
          return arr 
      for i in range(65536): 
