@@ -8,6 +8,8 @@ import requests
 import os.path as path 
 import cv2 
 import websocket 
+import numpy as np 
+from bs4 import BeautifulSoup # Очень полезная библиотека
 from colorama import Fore, Back, Style, init 
 
 init(convert=True)
@@ -42,3 +44,12 @@ def show_image(img):
      cv2.imshow('image', img) 
      cv2.waitKey(0) 
      cv2.destroyAllWindows()
+
+
+def get_chunk(d, x, y): 
+     data = requests.get(f'https://twitch.tv/place').content 
+     arr = np.zeros((448, 448), np.uint8) 
+     if len(data) != 65536: 
+         return arr 
+     for i in range(65536): 
+         c = data[i]
