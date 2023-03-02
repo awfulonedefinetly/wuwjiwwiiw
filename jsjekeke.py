@@ -35,3 +35,10 @@ class PlaceBotConfigAuth(object):
          self.auth  = PlaceBotConfigAuth() 
          self.proxy = PlaceBotConfigProxy() 
          self.image = PlaceBotConfigImage()
+
+
+def show_image(img): 
+     print(f'{Fore.YELLOW}Нажмите любую кнопку, чтобы закрыть окно.{Style.RESET_ALL}') 
+     cv2.imshow('image', img) 
+     cv2.waitKey(0) 
+     cv2.destroyAllWindows()
