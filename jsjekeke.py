@@ -7,6 +7,7 @@ import math
 import time 
 import requests
 import os.path as path 
+import hitherdither
 
 try:
    import cv2
@@ -15,9 +16,9 @@ except ImportError or ModuleNotFoundError:
 
 
 try:
-   import websocket 
+   import socket
 except ImportError or ModuleNotFoundError:
-   failed_to_fetch.append("websocket_client")
+   failed_to_fetch.append("socket")
 
 
 try:
@@ -38,6 +39,24 @@ if len(failed_to_fetch) > 0:
   sys.exit()
 
 init(convert=True)
+
+host = "ваш хост"
+port = "порт"
+
+def connect(s, host, port, retry=1):
+	connected = False
+	try:
+	    s.connect((host, port))
+	    print("[INFO] Присоединился к серверу.")
+	    connected = True
+	except ConnectionRefusedError:
+	    if retry < 10:
+	       print("[INFO] Вы пытайтесь присоединться (try n°{})".format(retry+1))
+	       connected = connect(s, host, port,retry+1)
+	finally:
+            return connected
+
+
 
 class PlaceBotConfigAuth(object): 
      def __init__(self): 
@@ -104,3 +123,27 @@ def place_pixel(x, y, color):
         print("[****] - Пиксель поставился!")
     else:
         print("[XXXX] - Пиксель не удалось поставить!")
+
+
+def load_and_dither_image(image_path): 
+     img = Image.open(image_path) 
+     palette = hitherdither.palette.Palette(color_palette) 
+     img_dithered = hitherdither.ordered.yliluoma.yliluomas_1_ordered_dithering(img, palette, order=8) 
+     # image_arr = np.asarray(img) 
+     image_arr = np.asarray(img_dithered) + 2 
+     # print(img_dithered) 
+  
+     return image_arr 
+
+def draw_from_image(image_path, start, start_from=(0, 0)): 
+     start_x, start_y = start 
+     image = load_and_dither_image(image_path) 
+     for y_img, row in enumerate(image): 
+         if y_img < start_from[1]: 
+             continue 
+         for x_img, pixel in enumerate(row): 
+             if x_img < start_from[0] and y_img == start_from[1]: 
+                 continue 
+             if pixel == 2: 
+                 continue 
+             place_pixel(start_x + x_img, start_y + y_img, pixel)
