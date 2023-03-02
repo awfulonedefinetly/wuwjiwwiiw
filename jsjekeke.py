@@ -89,8 +89,7 @@ def download_file(url):
                  f.write(chunk) 
      return filename
 
-
-def place_pixel(x: int, y: int, color: str):
+def place_pixel(x, y, color):
     url = "https://twitch.tv/place"
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
@@ -104,4 +103,4 @@ def place_pixel(x: int, y: int, color: str):
     if response.status_code == 201:
         print("[****] - Пиксель поставился!")
     else:
-        print("[XXXX] - Пиксель не удалось поставить!")")
+        print("[XXXX] - Пиксель не удалось поставить!")
