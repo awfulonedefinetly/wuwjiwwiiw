@@ -1,3 +1,4 @@
+failed_to_fetch = []
 import sys 
 import json 
 import datetime 
@@ -6,11 +7,35 @@ import math
 import time 
 import requests
 import os.path as path 
-import cv2 
-import websocket 
-import numpy as np 
-from bs4 import BeautifulSoup # Очень полезная библиотека
+
+try:
+   import cv2
+except ImportError or ModuleNotFoundError:
+   failed_to_fetch.append("opencv-python")
+
+
+try:
+   import websocket 
+except ImportError or ModuleNotFoundError:
+   failed_to_fetch.append("websocket_client")
+
+
+try:
+   import numpy as np 
+except ImportError or ModuleNotFoundError:
+   failed_to_fetch.append("numpy")
+
+
+try:
+   from bs4 import BeautifulSoup 
+except ImportError or ModuleNotFoundError:
+   failed_to_fetch.append("beautifulsoup4")
+
 from colorama import Fore, Back, Style, init 
+
+if len(failed_to_fetch) > 0:
+  print("Неудалось установить некоторые библиотеки для работы бота. Установите их самостоятельно: " + "".join(failed_to_fetch))
+  sys.exit()
 
 init(convert=True)
 
@@ -46,7 +71,7 @@ def show_image(img):
      cv2.destroyAllWindows()
 
 
-def get_chunk(d, x, y): 
+def get_chunk(d=None, x=None, y=None): 
      data = requests.get(f'https://twitch.tv/place').content 
      arr = np.zeros((448, 448), np.uint8) 
      if len(data) != 65536: 
