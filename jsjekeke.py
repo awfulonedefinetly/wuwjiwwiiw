@@ -16,25 +16,25 @@ class PlaceBotConfigAuth(object):
      def __init__(self): 
          self.login = '' 
          self.password = '' 
- class PlaceBotConfigProxy(object): 
-     def __init__(self): 
-         self.host = '' 
-         self.port = 0 
-         self.user = '' 
-         self.passwd = '' 
- class PlaceBotConfigImage(object): 
-     def __init__(self): 
-         self.path = '' 
-         self.x = 0 
-         self.y = 0 
-         self.defend = False 
-         self.strategy = '' 
-         self.canv_id = 0 
- class PlaceBotConfig(object): 
-     def __init__(self): 
-         self.auth  = PlaceBotConfigAuth() 
-         self.proxy = PlaceBotConfigProxy() 
-         self.image = PlaceBotConfigImage()
+class PlaceBotConfigProxy(object): 
+    def __init__(self): 
+        self.host = '' 
+        self.port = 0 
+        self.user = '' 
+        self.passwd = '' 
+class PlaceBotConfigImage(object): 
+    def __init__(self): 
+        self.path = '' 
+        self.x = 0 
+        self.y = 0 
+        self.defend = False 
+        self.strategy = '' 
+        self.canv_id = 0 
+class PlaceBotConfig(object): 
+    def __init__(self): 
+        self.auth  = PlaceBotConfigAuth() 
+        self.proxy = PlaceBotConfigProxy() 
+        self.image = PlaceBotConfigImage()
 
 
 def show_image(img): 
