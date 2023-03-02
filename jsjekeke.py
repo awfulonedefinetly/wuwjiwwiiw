@@ -1,13 +1,9 @@
 failed_to_fetch = []
 import sys 
-import json 
-import datetime 
-import random 
-import math 
 import time 
 import requests
-import os.path as path 
-import hitherdither
+import hitherdither 
+from PIL import Image
 
 try:
    import cv2
